@@ -14,6 +14,13 @@ import time
 pygame.init()
 
 import serial
+
+import speech_recognition as sr
+
+r = sr.Recognizer()
+
+print(sr.Microphone.list_microphone_names())
+
 baudrate = 9600
 reset_port = ""
 port = ""
@@ -28,6 +35,8 @@ message_prev = ""
 message_time = 0
 message_time_prev = 0
 
+words = ""
+text = ""
 print ("select your arduino port:")
 
 def serial_ports():
@@ -57,6 +66,14 @@ button_record = ""
 recording_status = ""
 
 
+
+#mic = 'Microphone (2- USB PnP Audio Device)'#sr.Microphone()
+
+#mic = sr.Microphone()
+
+sound_detect = "off"
+
+
 #----------------------------------------------------------------#
 
 analog1_x = 0
@@ -73,24 +90,25 @@ hat = ""
 hat_prev = ""
 
 
-up_color = "#01ccf5"
-left_color = "#01ccf5"
-right_color = "#01ccf5"
-down_color = "#01ccf5"
+up_color = "transparent"
+left_color = "transparent"
+right_color = "transparent"
+down_color = "transparent"
 
-button1_color = "#01ccf5"
-button2_color = "#01ccf5"
-button3_color = "#01ccf5"
-button4_color = "#01ccf5"
+button1_color = "transparent"
+button2_color = "transparent"
+button3_color = "transparent"
+button4_color = "transparent"
 
-button_L1_color = "#01ccf5"
-button_L2_color = "#01ccf5"
-button_R1_color = "#01ccf5"
-button_R2_color = "#01ccf5"
+button_L1_color = "transparent"
+button_L2_color = "transparent"
+button_R1_color = "transparent"
+button_R2_color = "transparent"
 
-analog1_color = "#01ccf5"
-analog2_color = "#01ccf5"
+analog1_color = "transparent"
+analog2_color = "transparent"
 
+voice_status_color = "transparent"
 
 ########## mengisi class table dengan instruksi pyqt5#############
 #----------------------------------------------------------------#
@@ -162,6 +180,13 @@ class table(QObject):
     @pyqtSlot(result=list)
     def port(self):  return serial_ports()
     
+    @pyqtSlot(result=str)
+    def voice_color(self):  return voice_status_color
+    
+    @pyqtSlot(result=str)
+    def voice_command(self):  return text
+    
+    
     @pyqtSlot('QString')
     def port_number(self, port_number):
         global port
@@ -215,6 +240,11 @@ def pygame_run(num):
     global message
     global message_prev
     
+    global sound_detect
+    global voice_status_color
+    
+    global words
+    global text
     clock = pygame.time.Clock()
     joysticks = {}
     done = False
@@ -233,7 +263,7 @@ def pygame_run(num):
                 joy_button_event = event.button
                 #print(joy_button_status)
                 print(joy_button_event)
-                message = str(joy_button_event + 1)
+                
                 if (joy_button_event == 0):
                     button1_color = "#d84860"
                     
@@ -257,7 +287,14 @@ def pygame_run(num):
                 
                 if (joy_button_event == 7):
                     button_R2_color = "#d84860"
+                
+                if (joy_button_event == 9):
+                    sound_detect = "on"
+                    voice_status_color = "#d84860"
                     
+                if (joy_button_event < 9):    
+                    message = str(joy_button_event + 1)
+                
                 if (joy_button_event == 10):
                     analog1_color = "#d84860"
                     
@@ -277,34 +314,37 @@ def pygame_run(num):
                 joy_button_event = event.button
                 message = str("")
                 if (joy_button_event == 0):
-                    button1_color = "#01ccf5"
+                    button1_color = "transparent"
                     
                 if (joy_button_event == 1):
-                    button2_color = "#01ccf5"
+                    button2_color = "transparent"
                     
                 if (joy_button_event == 2):
-                    button3_color = "#01ccf5"
+                    button3_color = "transparent"
                     
                 if (joy_button_event == 3):
-                    button4_color = "#01ccf5"
+                    button4_color = "transparent"
                     
                 if (joy_button_event == 4):
-                    button_L1_color = "#01ccf5"
+                    button_L1_color = "transparent"
                     
                 if (joy_button_event == 5):
-                    button_R1_color = "#01ccf5"
+                    button_R1_color = "transparent"
                     
                 if (joy_button_event == 6):
-                    button_L2_color = "#01ccf5"
+                    button_L2_color = "transparent"
                 
                 if (joy_button_event == 7):
-                    button_R2_color = "#01ccf5"
+                    button_R2_color = "transparent"
+                    
+                
+                    
                     
                 if (joy_button_event == 10):
-                    analog1_color = "#01ccf5"
+                    analog1_color = "transparent"
                     
                 if (joy_button_event == 11):
-                    analog2_color = "#01ccf5"
+                    analog2_color = "transparent"
 
                 
                 
@@ -367,27 +407,27 @@ def pygame_run(num):
             print(hat)
             if (hat[0] == -1):
                 left_color = "#d84860"
-                right_color = "#01ccf5"
+                right_color = "transparent"
                 
             if (hat[0] == 0):
-                left_color = "#01ccf5"
-                right_color = "#01ccf5"
+                left_color = "transparent"
+                right_color = "transparent"
                 
             if (hat[0] == 1):
-                left_color = "#01ccf5"
+                left_color = "transparent"
                 right_color = "#d84860"
                 
                 
             if (hat[1] == -1):
                 down_color = "#d84860"
-                up_color = "#01ccf5"
+                up_color = "transparent"
                 
             if (hat[1] == 0):
-                down_color = "#01ccf5"
-                up_color = "#01ccf5"
+                down_color = "transparent"
+                up_color = "transparent"
                 
             if (hat[1] == 1):
-                down_color = "#01ccf5"
+                down_color = "transparent"
                 up_color = "#d84860"
                 
                 
@@ -417,10 +457,63 @@ def pygame_run(num):
         global port
         
         
-        
+        global ser
         global message_time
         global message_time_prev
         
+        ######################################################
+        
+        
+        if (sound_detect == "on"):
+            with sr.Microphone() as source:
+                print('speak please:')
+                audio = r.listen(source)
+                # r.pause_threshold = 0.4
+                r.energy_threshold = 1000
+                r.duration = 3
+            
+            try:
+                text = r.recognize_google(audio, language = "ID")
+                
+                words = text
+                print(words)
+            except:
+                text = "ulangi"
+                words = ""
+            
+            if (words == "Balonku Ada Lima"):
+                message = "f"
+                #ser.write(str("f").encode())
+                
+            if (words == "Si Kancil Anak Nakal"):
+                message = "e"
+                #ser.write(str("e").encode())
+                
+            if (words == "Lihat Kebunku"):
+                message = "a"
+                #ser.write(str("a").encode())
+                
+            if (words == "kasih ibu"):
+                message = "b"
+                #ser.write(str("b").encode())
+            
+            if (words == "dua mata saya"):
+                message = "c"
+                #ser.write(str("c").encode())
+            if (words == "Ambilkan Bulan Bu"):
+                message = "d"
+                #ser.write(str("d").encode())
+                
+            if (words == "Ibu Kita Kartini"):
+                message = "g"
+                #ser.write(str("g").encode())
+            
+            sound_detect = "off"
+            
+        if (sound_detect == "off"):
+            voice_status_color = "transparent"
+            
+            
         
         if (serial_status == 'connected'):
             if (serial_status != serial_status_prev):
@@ -434,6 +527,7 @@ def pygame_run(num):
             if (message != message_prev):
                 ser.write(str(message).encode())
                 print("send")
+                print(message)
                 
         else:
             if (serial_status != serial_status_prev):
@@ -446,7 +540,11 @@ def pygame_run(num):
             
             message_time_prev = time.time()
         
-                
+        
+        
+        
+        
+        
         serial_status_prev = serial_status
         
         message_prev = message
@@ -454,8 +552,8 @@ def pygame_run(num):
         
         clock.tick(30)
 
-    
-    
+
+        
         
 
 ########## memanggil class table di mainloop######################

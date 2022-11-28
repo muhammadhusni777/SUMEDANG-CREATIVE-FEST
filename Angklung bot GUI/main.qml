@@ -15,7 +15,7 @@ Window {
 	maximumHeight : 650
 	minimumHeight : 650
 	title:"Ardumeka Angklung-Bot Controller"
-	color : "#111111"
+	color : "#040606"
     visible: true
     //flags: Qt.WindowMaximized //Qt.Dialog
 	
@@ -50,9 +50,9 @@ Window {
 		y:20
 		width : 450
 		height : 120
-		color : "#04b6f0"
-		border.color: "white"
-		border.width: 5
+		color : "#040606"
+		border.color: "#12e0cd"
+		border.width: 3
 	
 	Text{
 		
@@ -63,7 +63,7 @@ Window {
 		text : "Ardumeka Angklung-Bot Controller"
 		wrapMode: Text.WordWrap 
 		horizontalAlignment: Text.AlignHCenter//Text.AlignJustify
-		color : "#111111"
+		color : "#12e0cd"
 		font.pixelSize : 25
 	}
 	
@@ -76,7 +76,7 @@ Window {
 		text : "Written By : Ajang Rahmat and Muhammad Husni"
 		wrapMode: Text.WordWrap 
 		horizontalAlignment: Text.AlignHCenter//Text.AlignJustify
-		color : "#111111"
+		color : "#12e0cd"
 		font.pixelSize : 18
 	}
 	
@@ -98,14 +98,14 @@ Window {
 		width : 40
 		height : 220
 		color : "#d84860"
-		border.color: "white"
-		border.width: 5
+		border.color: "#12e0cd"
+		border.width: 2
 		
 		Text{
 		x: (parent.width-10)/2
 		y: (parent.height-30)/2
 		text : "1"
-		color : "#111111"
+		color : "#12e0cd"
 		font.pixelSize : 24
 	}
 		
@@ -121,14 +121,14 @@ Window {
 		width : 40
 		height : 220
 		color : "#122e55"
-		border.color: "white"
-		border.width: 5
+		border.color: "#12e0cd"
+		border.width: 2
 	
 	Text{
 		x: (parent.width-10)/2
 		y: (parent.height-30)/2
 		text : "2"
-		color : "#111111"
+		color : "#12e0cd"
 		font.pixelSize : 24
 	}
 	
@@ -144,15 +144,15 @@ Window {
 		width : 40
 		height : 220
 		color : "#d84860"
-		border.color: "white"
-		border.width: 5
+		border.color: "#12e0cd"
+		border.width: 2
 	
 	
 	Text{
 		x: (parent.width-10)/2
 		y: (parent.height-30)/2
 		text : "3"
-		color : "#111111"
+		color : "#12e0cd"
 		font.pixelSize : 24
 	}
 	
@@ -168,14 +168,14 @@ Window {
 		width : 40
 		height : 220
 		color : "#122e55"
-		border.color: "white"
-		border.width: 5
+		border.color: "#12e0cd"
+		border.width: 2
 	
 	Text{
 		x: (parent.width-10)/2
 		y: (parent.height-30)/2
 		text : "4"
-		color : "#111111"
+		color : "#12e0cd"
 		font.pixelSize : 24
 	}
 	
@@ -191,8 +191,8 @@ Window {
 		width : 40
 		height : 220
 		color : "#122e55"
-		border.color: "white"
-		border.width: 5
+		border.color: "#12e0cd"
+		border.width: 2
 	
 	
 		Text{
@@ -200,7 +200,7 @@ Window {
 		y: (parent.height-30)/2
 		width : parent.width
 		text : "5"
-		color : "#111111"
+		color : "#12e0cd"
 		font.pixelSize : 24
 	}
 	
@@ -215,14 +215,14 @@ Window {
 		width : 40
 		height : 220
 		color : "#d84860"
-		border.color: "white"
-		border.width: 5
+		border.color: "#12e0cd"
+		border.width: 2
 		
 		Text{
 		x: (parent.width-10)/2
 		y: (parent.height-30)/2
 		text : "6"
-		color : "#111111"
+		color : "#12e0cd"
 		font.pixelSize : 24
 	}
 		
@@ -239,15 +239,15 @@ Window {
 		width : 40
 		height : 220
 		color : "#d84860"
-		border.color: "white"
-		border.width: 5
+		border.color: "#12e0cd"
+		border.width: 2
 	
 	
 		Text{
 		x: (parent.width-10)/2
 		y: (parent.height-30)/2
 		text : "7"
-		color : "#111111"
+		color : "#12e0cd"
 		font.pixelSize : 24
 	}
 	
@@ -263,14 +263,14 @@ Window {
 		width : 40
 		height : 220
 		color : "#122e55"
-		border.color: "white"
-		border.width: 5
+		border.color: "#12e0cd"
+		border.width: 2
 	
 		Text{
 		x: (parent.width-10)/2
 		y: (parent.height-30)/2
 		text : "8"
-		color : "#111111"
+		color : "#12e0cd"
 		font.pixelSize : 24
 	}
 	
@@ -299,7 +299,7 @@ Window {
 	height : 180
 	color : "transparent"
 	border.width : 3
-	border.color : "white"
+	border.color : "#12e0cd"
 	
 	
 	Text {
@@ -308,7 +308,7 @@ Window {
 			text: "ANGKLUNG USB PORT :"
 			font.family: "Helvetica"
 			font.pointSize: 14
-			color: "white"
+			color: "#12e0cd"
 		}
 		
 	ComboBox {
@@ -372,13 +372,14 @@ Window {
 	}
 	
 	Rectangle {
+	id : voice_status
 	x:400
 	y:450
 	width : 350
 	height : 180
-	color : "#01ccf5"
+	color : "grey"
 	border.width : 3
-	border.color : "white"
+	border.color : "#12e0cd"
 	
 	Text {
 			x : 10
@@ -386,10 +387,27 @@ Window {
 			text: "VOICE SENSOR ACTIVATION :"
 			font.family: "Helvetica"
 			font.pointSize: 14
-			color: "black"
+			color: "#12e0cd"
+		}
+		
+		
+	Text {
+			id : voice_command
+			x : 10
+			y : 40		
+			width : parent.width - 20
+			text: ""
+			wrapMode: Text.WordWrap 
+			horizontalAlignment: Text.AlignJustify
+			font.family: "Helvetica"
+			font.pointSize: 14
+			color: "#12e0cd"
 		}
 	
 	}
+	
+	
+	
 	
 	
 	
@@ -411,6 +429,10 @@ Window {
 			r2.color = backend.button_R2_color()
 			
 			cb1.model = backend.port()
+			
+			voice_status.color = backend.voice_color()
+			
+			voice_command.text = backend.voice_command()
 		
 		}
 		
